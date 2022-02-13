@@ -15,7 +15,9 @@ async function saveTool(tool) {
 }
 
 async function getTools() {
-    return true;
+    const result = await connection.query('SELECT * FROM tools');
+
+    return result.rows;
 }
 
 async function deleteTool() {

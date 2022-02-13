@@ -16,8 +16,16 @@ async function postNewTool(req, res, next) {
     }
 }
 
-async function getToolsList(req, res) {
-    return res.send();
+async function getToolsList(req, res, next) {
+    try {
+        const result = await toolsService.getToolsList();
+
+        return res.send(result);
+    } catch (error) {
+        if (error.name === 'ToolError') return res.status(error.status).send(error.message);
+
+        return next(error);
+    }
 }
 
 async function removeToolById(req, res) {
