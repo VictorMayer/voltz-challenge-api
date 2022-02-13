@@ -29,6 +29,12 @@ async function getToolsByTag(tag) {
     return result.rows;
 }
 
+async function getToolByTitleOrLink({ title, link }) {
+    const result = await connection.query('SELECT * FROM tooles WHERE title = $1 OR link = $2 LIMIT BY 1', [title, link]);
+
+    return result.rows[0];
+}
+
 async function deleteTool(id) {
     return connection.query('DELETE FROM tools WHERE id = $1', [id]);
 }
@@ -38,4 +44,5 @@ export {
     getTools,
     deleteTool,
     getToolsByTag,
+    getToolByTitleOrLink,
 };
