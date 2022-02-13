@@ -18,7 +18,9 @@ async function postNewTool(req, res, next) {
 
 async function getToolsList(req, res, next) {
     try {
-        const result = await toolsService.getToolsList();
+        const { tag } = req.query;
+
+        const result = await toolsService.getToolsList(tag);
 
         return res.send(result);
     } catch (error) {
