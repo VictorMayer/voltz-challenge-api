@@ -15,6 +15,7 @@ app.get('/check-status', (req, res) => {
 
 app.post('/tools', toolsController.postNewTool);
 app.get('/tools', toolsController.getToolsList);
+app.delete('/tools/:id', toolsController.removeToolById);
 
 app.use(serverError);
 

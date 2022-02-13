@@ -20,8 +20,8 @@ async function getTools() {
     return result.rows;
 }
 
-async function deleteTool() {
-    return true;
+async function deleteTool(id) {
+    return connection.query('DELETE FROM tools WHERE id = $1', [id]);
 }
 
 export {
