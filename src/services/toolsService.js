@@ -1,3 +1,4 @@
+import ToolError from '../errors/ToolError.js';
 import * as toolsRepository from '../repositories/toolsRepository.js';
 
 async function createNewTool(tool) {
@@ -5,7 +6,11 @@ async function createNewTool(tool) {
 }
 
 async function getToolsList() {
-    return toolsRepository.getTools();
+    const result = await toolsRepository.getTools();
+
+    if (!result.length) throw new ToolError('No tools have been registered', 200);
+
+    return result;
 }
 
 async function removeTool() {
