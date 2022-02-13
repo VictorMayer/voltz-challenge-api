@@ -1,5 +1,6 @@
 {
   "name": "voltz-challenge-api",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -30,6 +31,7 @@
     "eslint-config-prettier": "8.3.0",
     "eslint-plugin-import": "^2.25.4",
     "husky": "^7.0.4",
+    "nodemon": "^2.0.15",
     "prettier": "2.5.1"
   }
 }
