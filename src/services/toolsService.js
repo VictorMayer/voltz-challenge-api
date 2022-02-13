@@ -2,6 +2,12 @@ import ToolError from '../errors/ToolError.js';
 import * as toolsRepository from '../repositories/toolsRepository.js';
 
 async function createNewTool(tool) {
+    const { title, link } = tool;
+
+    const existentTool = await toolsRepository.getToolByTitleOrLink({ title, link });
+
+    if (existentTool) throw new ToolError(`${existentTool.title} already exists`, 409);
+
     return toolsRepository.saveTool(tool);
 }
 
