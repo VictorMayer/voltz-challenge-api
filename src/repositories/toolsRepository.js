@@ -1,4 +1,5 @@
 import connection from '../database.js';
+import ToolError from '../errors/ToolError.js';
 
 async function saveTool(tool) {
     const { title, link, description, tags } = tool;
@@ -20,6 +21,14 @@ async function getTools() {
     return result.rows;
 }
 
+async function getToolsByTag(tag) {
+    const result = await connection.query('SELECT * FROM tools WHERE $1 = ANY (tags)', [tag]);
+
+    if (!result.rows.length) throw new ToolError(`No tools tagged with ${tag} were found!`, 404);
+
+    return result.rows;
+}
+
 async function deleteTool(id) {
     return connection.query('DELETE FROM tools WHERE id = $1', [id]);
 }
@@ -28,4 +37,5 @@ export {
     saveTool,
     getTools,
     deleteTool,
+    getToolsByTag,
 };

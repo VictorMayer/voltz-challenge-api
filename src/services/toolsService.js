@@ -5,10 +5,13 @@ async function createNewTool(tool) {
     return toolsRepository.saveTool(tool);
 }
 
-async function getToolsList() {
-    const result = await toolsRepository.getTools();
+async function getToolsList(tag) {
+    let result;
 
-    if (!result.length) throw new ToolError('No tools have been registered!', 200);
+    if (!tag) result = await toolsRepository.getTools();
+    else result = await toolsRepository.getToolsByTag(tag);
+
+    if (!result.length) throw new ToolError('No tools have been registered!', 404);
 
     return result;
 }
