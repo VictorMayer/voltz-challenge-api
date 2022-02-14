@@ -30,7 +30,7 @@ async function getToolsByTag(tag) {
 }
 
 async function getToolByTitleOrLink({ title, link }) {
-    const result = await connection.query('SELECT * FROM tooles WHERE title = $1 OR link = $2 LIMIT BY 1', [title, link]);
+    const result = await connection.query('SELECT * FROM tools WHERE title = $1 OR link = $2', [title, link]);
 
     return result.rows[0];
 }

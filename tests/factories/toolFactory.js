@@ -8,7 +8,5 @@ export default function mockToolFactory() {
         tags: [faker.random.words()],
     };
 
-    console.log(mockBody);
-
     return mockBody;
 }

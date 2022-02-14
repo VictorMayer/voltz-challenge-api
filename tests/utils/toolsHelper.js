@@ -5,11 +5,11 @@ function endConnection() {
 }
 
 function cleanTools() {
-    return connection.query('TRUNCATE FROM tools CASCADE');
+    return connection.query('TRUNCATE tools CASCADE');
 }
 
 function cleanUsers() {
-    return connection.query('TRUNCATE FROM users CASCADE');
+    return connection.query('TRUNCATE users CASCADE');
 }
 
 function selectRandomToolProperty() {
