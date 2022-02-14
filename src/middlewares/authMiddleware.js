@@ -1,6 +1,6 @@
 import connection from '../database.js';
 
-export default async function authorize(req, res, next) {
+export default async function tokenAuthorizationMiddleware(req, res, next) {
     try {
         const token = req.headers.authorization?.split('Bearer ')[1];
         const result = await connection.query('SELECT * FROM sessions WHERE token = $1', [token]);
