@@ -13,11 +13,7 @@ const {
 } = process.env;
 
 let databaseConnection = {
-    user: DB_USER,
-    password: DB_PASSWORD,
-    host: DB_HOST,
-    port: DB_PORT,
-    database: DB_DATABASE,
+    connectionString: DATABASE_URL,
 };
 
 if (NODE_ENV === 'prod') {
