@@ -5,16 +5,16 @@ import app from '../../src/app.js';
 
 import mockToolFactory from '../factories/toolFactory.js';
 import mockTokenFactory from '../factories/sessionFactory.js';
-import { cleanTools, endConnection, selectRandomToolProperty } from '../utils/toolsHelper.js';
+import { cleanDB, endConnection, selectRandomToolProperty } from '../utils/toolsHelper.js';
 
 afterAll(async () => {
-    await cleanTools();
+    await cleanDB();
     await endConnection();
 });
 
 describe('POST /tools', () => {
     beforeEach(async () => {
-        await cleanTools();
+        await cleanDB();
     });
 
     it('returns 201 for created tool with valid body', async () => {
@@ -71,7 +71,7 @@ describe('POST /tools', () => {
 
 describe('GET /tools', () => {
     beforeEach(async () => {
-        await cleanTools();
+        await cleanDB();
     });
 
     it('returns 200 for listing all tools', async () => {
@@ -133,7 +133,7 @@ describe('GET /tools', () => {
 
 describe('DELETE /tools/:id', () => {
     beforeEach(async () => {
-        await cleanTools();
+        await cleanDB();
     });
 
     it('returns 200 deleted tool', async () => {

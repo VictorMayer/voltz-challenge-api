@@ -4,12 +4,10 @@ function endConnection() {
     return connection.end();
 }
 
-function cleanTools() {
-    return connection.query('TRUNCATE tools CASCADE');
-}
-
-function cleanUsers() {
-    return connection.query('TRUNCATE users CASCADE');
+async function cleanDB() {
+    await connection.query('TRUNCATE tools RESTART IDENTITY');
+    await connection.query('TRUNCATE sessions RESTART IDENTITY');
+    await connection.query('TRUNCATE users RESTART IDENTITY');
 }
 
 function selectRandomToolProperty() {
@@ -26,7 +24,6 @@ function selectRandomToolProperty() {
 
 export {
     endConnection,
-    cleanTools,
-    cleanUsers,
+    cleanDB,
     selectRandomToolProperty,
 };
