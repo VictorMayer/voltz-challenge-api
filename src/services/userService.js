@@ -17,18 +17,24 @@ async function createUser(user) {
     return userRepository.saveUser(body);
 }
 
+async function upsertSession(id) {
+    let session = await userRepository.checkSession(id);
+
+    if (session) return session.token;
+
+    session = await userRepository.createSession({ id, token: uuid() });
+
+    return session.token;
+}
+
 async function checkLogin(user) {
     const { email, password } = user;
 
     const result = await userRepository.checkUserByEmail(email);
 
-    if (!result || !bcrypt.compareSync(password, result.password)) throw new UserError('Email and/or password are invalid!', 401);
+    if (result && bcrypt.compareSync(password, result.password)) return upsertSession(result.id);
 
-    let session = await userRepository.checkSession(result.id);
-
-    if (!session?.lenght) session = await userRepository.createSession({ id: result.id, token: uuid() });
-
-    return session.token;
+    throw new UserError('Email and/or password are invalid!', 401);
 }
 
 export {
