@@ -26,9 +26,7 @@ async function checkLogin(user) {
 
     let session = await userRepository.checkSession(result.id);
 
-    const token = uuid();
-
-    if (!session?.lenght) session = await userRepository.createSession({ id: result.id, token });
+    if (!session?.lenght) session = await userRepository.createSession({ id: result.id, token: uuid() });
 
     return session.token;
 }
