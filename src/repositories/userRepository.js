@@ -18,7 +18,29 @@ async function saveUser({ email, password }) {
     return result.rows[0];
 }
 
+async function checkSession(id) {
+    const result = await connection.query('SELECT * FROM sessions WHERE "userId" = $1', [id]);
+
+    return result.rows[0];
+}
+
+async function createSession({ id, token }) {
+    await connection.query('DELETE FROM sessions WHERE "userId" = $1', [id]);
+
+    const result = await connection.query(`
+        INSERT INTO
+            sessions ("userId", token)
+        VALUES
+            ($1, $2)
+        RETURNING *
+    `, [id, token]);
+
+    return result.rows[0];
+}
+
 export {
     checkUserByEmail,
     saveUser,
+    checkSession,
+    createSession,
 };

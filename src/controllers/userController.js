@@ -7,7 +7,7 @@ async function register(req, res, next) {
 
         const result = await userService.createUser(req.body);
 
-        return res.send(result);
+        return res.status(201).send(result);
     } catch (error) {
         if (error.name === 'UserError') return res.status(error.status).send(error.message);
 
@@ -18,7 +18,10 @@ async function register(req, res, next) {
 async function login(req, res, next) {
     try {
         validateUser(req.body); // to avoid unecessary DB acess
-        return res.send();
+
+        const result = await userService.checkLogin(req.body);
+
+        return res.status(201).send({ token: result });
     } catch (error) {
         if (error.name === 'UserError') return res.status(error.status).send(error.message);
 
