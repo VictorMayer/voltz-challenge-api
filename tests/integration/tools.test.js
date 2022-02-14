@@ -67,3 +67,60 @@ describe('POST /tools', () => {
         expect(result.status).toEqual(400);
     });
 });
+
+describe('GET /tools', () => {
+    beforeEach(async () => {
+        await cleanTools();
+    });
+
+    it('returns 200 for listing all tools', async () => {
+        const token = await mockTokenFactory();
+
+        const body = mockToolFactory();
+
+        const result = await supertest(app)
+            .get('/tools')
+            .set('Authorization', `Bearer ${token}`)
+            .send(body);
+        expect(result.status).toEqual(201);
+    });
+
+    it('returns 401 for missing token', async () => {
+        const body = mockToolFactory();
+
+        const result = await supertest(app)
+            .post('/tools')
+            .send(body);
+        expect(result.status).toEqual(401);
+    });
+
+    it('returns 409 if new tool already exists', async () => {
+        const token = await mockTokenFactory();
+
+        const body = mockToolFactory();
+
+        await supertest(app).post('/tools').set('Authorization', `Bearer ${token}`).send(body);
+
+        const result = await supertest(app)
+            .post('/tools')
+            .set('Authorization', `Bearer ${token}`)
+            .send(body);
+        expect(result.status).toEqual(409);
+    });
+
+    it('returns 400 for body missing data', async () => {
+        const token = await mockTokenFactory();
+
+        const body = mockToolFactory();
+
+        const property = selectRandomToolProperty();
+
+        delete body[property];
+
+        const result = await supertest(app)
+            .post('/tools')
+            .set('Authorization', `Bearer ${token}`)
+            .send(body);
+        expect(result.status).toEqual(400);
+    });
+});
