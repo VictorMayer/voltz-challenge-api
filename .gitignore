@@ -1,5 +1,5 @@
 node_modules
 
 .env
-.evn.dev
+.env.dev
 .env.test
