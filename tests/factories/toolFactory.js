@@ -7,6 +7,5 @@ export default function mockToolFactory() {
         description: faker.random.words(),
         tags: [faker.random.words()],
     };
-
     return mockBody;
 }
