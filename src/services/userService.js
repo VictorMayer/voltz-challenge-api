@@ -4,7 +4,7 @@ import * as userRepository from '../repositories/userRepository.js';
 async function createUser(user) {
     const { email, password } = user;
 
-    const existentEmail = userRepository.checkUserByEmail(email);
+    const existentEmail = await userRepository.checkUserByEmail(email);
 
     if (existentEmail) throw new UserError('Email already exists!', 409);
 
