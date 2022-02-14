@@ -9,7 +9,7 @@ function specifyError(error) {
     }
 }
 
-export default function validateNewUser(tool) {
+export default function validateUser(tool) {
     const toolSchema = joi.object({
         email: joi.string().email().required(),
         password: joi.string().min(4).required(),

@@ -1,9 +1,9 @@
-import validateNewUser from '../validations/userValidation.js';
+import validateUser from '../validations/userValidation.js';
 import * as userService from '../services/userService.js';
 
 async function register(req, res, next) {
     try {
-        validateNewUser(req.body);
+        validateUser(req.body);
 
         const result = await userService.createUser(req.body);
 
@@ -15,8 +15,15 @@ async function register(req, res, next) {
     }
 }
 
-async function login(req, res) {
-    return res.send();
+async function login(req, res, next) {
+    try {
+        validateUser(req.body); // to avoid unecessary DB acess
+        return res.send();
+    } catch (error) {
+        if (error.name === 'UserError') return res.status(error.status).send(error.message);
+
+        return next(error);
+    }
 }
 
 export {
