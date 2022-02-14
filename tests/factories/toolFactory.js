@@ -8,10 +8,5 @@ export default function mockToolFactory() {
         tags: [faker.random.words()],
     };
 
-<<<<<<< HEAD
-=======
-    console.log(mockBody);
-
->>>>>>> f86514a1e1d5950eb4af11222e972eaf592c7194
     return mockBody;
 }
