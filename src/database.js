@@ -3,11 +3,6 @@ import pg from 'pg';
 const { Pool } = pg;
 
 const {
-    DB_USER,
-    DB_PASSWORD,
-    DB_HOST,
-    DB_PORT,
-    DB_DATABASE,
     NODE_ENV,
     DATABASE_URL,
 } = process.env;
