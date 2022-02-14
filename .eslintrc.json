@@ -24,6 +24,7 @@
             "ImportDeclaration": "never",
             "ExportDeclaration": "always"
         }],
+        "import/no-useless-path-segments": 0,
         "max-len": "off"
     }
 }

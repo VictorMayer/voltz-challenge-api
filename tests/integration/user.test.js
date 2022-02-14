@@ -11,7 +11,7 @@ afterAll(async () => {
     await endConnection();
 });
 
-describe('POST /sign-up', () => {
+describe('POST /users/sign-up', () => {
     beforeEach(async () => {
         await cleanDB();
     });
@@ -20,7 +20,7 @@ describe('POST /sign-up', () => {
         const body = mockUserFactory();
 
         const result = await supertest(app)
-            .post('/sign-up')
+            .post('/users/sign-up')
             .send(body);
         expect(result.status).toEqual(201);
     });
@@ -28,10 +28,10 @@ describe('POST /sign-up', () => {
     it('returns 409 if new user already exists', async () => {
         const body = mockUserFactory();
 
-        await supertest(app).post('/sign-up').send(body);
+        await supertest(app).post('/users/sign-up').send(body);
 
         const result = await supertest(app)
-            .post('/sign-up')
+            .post('/users/sign-up')
             .send(body);
         expect(result.status).toEqual(409);
     });
@@ -44,13 +44,13 @@ describe('POST /sign-up', () => {
         delete body[property];
 
         const result = await supertest(app)
-            .post('/sign-up')
+            .post('/users/sign-up')
             .send(body);
         expect(result.status).toEqual(400);
     });
 });
 
-describe('POST /sign-in', () => {
+describe('POST /users/sign-in', () => {
     beforeEach(async () => {
         await cleanDB();
     });
@@ -58,10 +58,10 @@ describe('POST /sign-in', () => {
     it('returns 201 for loggin with valid user and created session', async () => {
         const body = mockUserFactory();
 
-        await supertest(app).post('/sign-up').send(body);
+        await supertest(app).post('/users/sign-up').send(body);
 
         const result = await supertest(app)
-            .post('/sign-in')
+            .post('/users/sign-in')
             .send(body);
         expect(result.status).toEqual(201);
     });
@@ -69,12 +69,12 @@ describe('POST /sign-in', () => {
     it('returns 401 for wrong email and/or password', async () => {
         const userRegister = mockUserFactory();
 
-        await supertest(app).post('/sign-up').send(userRegister);
+        await supertest(app).post('/users/sign-up').send(userRegister);
 
         const userLogin = mockUserFactory();
 
         const result = await supertest(app)
-            .post('/sign-in')
+            .post('/users/sign-in')
             .send(userLogin);
         expect(result.status).toEqual(401);
     });
@@ -82,7 +82,7 @@ describe('POST /sign-in', () => {
     it('returns 401 for correct email and wrong password', async () => {
         const userRegister = mockUserFactory();
 
-        await supertest(app).post('/sign-up').send(userRegister);
+        await supertest(app).post('/users/sign-up').send(userRegister);
 
         const userLogin = {
             email: userRegister.email,
@@ -90,7 +90,7 @@ describe('POST /sign-in', () => {
         };
 
         const result = await supertest(app)
-            .post('/sign-in')
+            .post('/users/sign-in')
             .send(userLogin);
         expect(result.status).toEqual(401);
     });
@@ -103,7 +103,7 @@ describe('POST /sign-in', () => {
         delete body[property];
 
         const result = await supertest(app)
-            .post('/sign-in')
+            .post('/users/sign-in')
             .send(body);
         expect(result.status).toEqual(400);
     });
