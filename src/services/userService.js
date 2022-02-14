@@ -22,7 +22,7 @@ async function checkLogin(user) {
 
     const result = await userRepository.checkUserByEmail(email);
 
-    if (!bcrypt.compareSync(password, result.password)) throw new UserError('Email and/or password are invalid!', 401);
+    if (!result || !bcrypt.compareSync(password, result.password)) throw new UserError('Email and/or password are invalid!', 401);
 
     let session = await userRepository.checkSession(result.id);
 

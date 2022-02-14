@@ -7,7 +7,6 @@ function endConnection() {
 async function cleanDB() {
     await connection.query('TRUNCATE tools RESTART IDENTITY');
     await connection.query('TRUNCATE sessions RESTART IDENTITY');
-    await connection.query('TRUNCATE users RESTART IDENTITY');
 }
 
 function selectRandomToolProperty() {
