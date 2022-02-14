@@ -14,13 +14,12 @@ function specifyError(error) {
 export default function validateNewTool(tool) {
     const toolSchema = joi.object({
         title: joi.string().min(2).required(),
-        link: joi.string().pattern(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:% \\+.~#?&//=]*)/).required(),
-        description: joi.string().min(10).required(),
+        link: joi.string().pattern(/https||http?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:% \\+.~#?&//=]*)/).required(),
+        description: joi.string().min(2).required(),
         tags: joi.array().min(1).required(),
     });
 
     const { error } = toolSchema.validate(tool);
-
     if (error) specifyError(error.details[0].context.key);
 
     return true;
