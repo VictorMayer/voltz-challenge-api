@@ -18,7 +18,6 @@ async function register(req, res, next) {
 async function login(req, res, next) {
     try {
         validateUser(req.body); // to avoid unnecessary DB acess
-
         const result = await userService.checkLogin(req.body);
 
         return res.status(201).send({ token: result });
