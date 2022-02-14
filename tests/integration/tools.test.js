@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
+import '../../src/setup.js';
 import supertest from 'supertest';
 import app from '../../src/app.js';
-import '../../src/setup.js';
 
 import mockToolFactory from '../factories/toolFactory.js';
 import { cleanTools, endConnection, selectRandomToolProperty } from '../utils/toolsHelper.js';
