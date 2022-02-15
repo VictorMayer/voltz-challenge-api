@@ -88,3 +88,8 @@ You should replace the values in the command:
         npm run test-once
 
 
+<br>
+
+You can test the routes using [Postman](https://www.postman.com/downloads/) or [Thunder Client](https://www.thunderclient.com/)
+
+: )
