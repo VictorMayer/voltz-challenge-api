@@ -10,6 +10,42 @@ If you registered a tool by mistake, you can delete it at any time.
 
 <br/>
 
+## The fastet way to test the API is through the deployed link here: 
+
+        https://voltz-challenge.herokuapp.com/
+
+### You can test the routes using [Postman](https://www.postman.com/downloads/) or [Thunder Client](https://www.thunderclient.com/)
+
+<br>
+<br>
+
+## Possible Routes
+
+    Create User:
+                POST /users/sign-up
+    Create Login:
+                POST /users/sign-in
+
+    Create Tool:
+                POST /tools
+
+    List all Tools:
+                GET /tools
+
+    List all Tools with given Tag:
+                GET /tools?tag={yourTag}
+
+    Remove Tool:
+                DELETE /tools/:id
+
+
+    *all /tools must be authenticated through Bearer token
+<br>
+
+## If you want to run the API on your machine follow the tutorial bellow
+
+<br>
+
 # Installation (Linux)
 
 ### 1. Download the repository
@@ -89,7 +125,3 @@ You should replace the values in the command:
 
 
 <br>
-
-You can test the routes using [Postman](https://www.postman.com/downloads/) or [Thunder Client](https://www.thunderclient.com/)
-
-: )
