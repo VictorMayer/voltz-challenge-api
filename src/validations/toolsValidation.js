@@ -15,7 +15,7 @@ export default function validateNewTool(tool) {
     const toolSchema = joi.object({
         title: joi.string().min(2).required(),
         link: joi.string().pattern(/https||http?:\/\/(www\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:% \\+.~#?&//=]*)/).required(),
-        description: joi.string().min(2).required(),
+        description: joi.string().min(5).required(),
         tags: joi.array().min(1).required(),
     });
 

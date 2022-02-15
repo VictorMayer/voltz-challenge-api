@@ -17,7 +17,7 @@ async function getToolsList(tag) {
     if (!tag) result = await toolsRepository.getTools();
     else result = await toolsRepository.getToolsByTag(tag);
 
-    if (!result.length) throw new ToolError('No tools have been registered!', 404);
+    if (!result.length) throw new ToolError('No tools have been registered yet!', 404);
 
     return result;
 }

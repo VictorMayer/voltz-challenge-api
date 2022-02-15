@@ -1,0 +1,255 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tools API",
+        "description": "This API allows you, as an authenticated user, to request tools, that can be sourced by a specific tag or not, and in this case it will list all registered tools. If your loved tool isn't listed there, you can always register a new tool since you are an authenticated user.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/users/sign-up": {
+            "post": {
+                "summary": "register a new user",
+                "description": "given a unique email and a long-enougth password, this route creates a new user",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "$ref": "#/components/schemas/id" },
+                                        "schema":{ "$ref": "#/components/schemas/user" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The provided body is incorrect",
+                        "content": {
+                            "text/plain": {
+                                "examples": {
+                                    "invalidEmail": { "value": "email is not valid!" },
+                                    "invalidPassword": { "value": "password is too short!" }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "text/plain": {
+                                "example": "Email already exists!"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/sign-in":{
+            "post": {
+                "summary": "user login",
+                "description": "given a correct email and password combination, authorize the user to consume authenticated routes of this API by creating a session and responding with the user's authentication token.",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "token": { "$ref": "#/components/schemas/token" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "The provided body is incorrect",
+                        "content": {
+                            "text/plain": {
+                                "examples": {
+                                    "invalidEmail": { "value": "email is not valid!" },
+                                    "invalidPassword": { "value": "password is too short!" }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Given password doesn't match with user's password",
+                        "content": {
+                            "text/plain": {
+                                "example": "Email and/or password are invalid!"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools": {
+            "post": {
+                "summary": "register new tool",
+                "description": "if given a valid token and body, register a new tool",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/tool"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": { "$ref": "#/components/schemas/id" },
+                                        "schema":{ "$ref": "#/components/schemas/tool" }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "plain/text": {
+                                "examples": {
+                                    "invalidTitle": { "value": "title is too short!" },
+                                    "invalidLink": { "value": "link is not a valid URL!" },
+                                    "invalidDescription": { "value": "description is too short!" },
+                                    "invalidTags": { "value": "must include at least one tag!" }
+                                }
+                            }
+                        }
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "content": {
+                            "text/plain": {
+                                "example": "tool already exists!"
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "parameters": [
+                    { 
+                        "name": "tag",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "$ref": "#/components/schemas/tag"
+                        }
+                    }
+                ],
+                "summary": "list tools",
+                "description": "list all tools, or if a tag query string is passed in the requisition url, list all tools that matched the given tag",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/tool"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "text/plain": {
+                                "example": "No tool have been registered yet"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "id": {
+                "type": "number"
+            },
+            "email": {
+                "type": "string"
+            },
+            "password": {
+                "type": "string",
+                "minLength": 4
+            },
+            "token": {
+                "type": "string"
+            },
+            "title": {
+                "type": "string",
+                "minLength": 2
+            },
+            "link": {
+                "type": "string"
+            },
+            "description": {
+                "type": "string",
+                "minLength": 5
+            },
+            "tags": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                    "type": "string"
+                }
+            },
+            "tag": {
+                "type": "string"
+            },
+            "user": {
+                "type": "object",
+                "properties": {
+                    "email": { "$ref": "#/components/schemas/email" },
+                    "password": { "$ref": "#/components/schemas/password" }
+                }
+            },
+            "tool": {
+                "type":"object",
+                "properties": {
+                    "title": { "$ref": "#/components/schemas/title" },
+                    "link": { "$ref": "#/components/schemas/link" },
+                    "description": { "$ref": "#/components/schemas/description" },
+                    "tags": { "$ref": "#/components/schemas/tags" }
+                }
+            }
+        }
+    }
+}
