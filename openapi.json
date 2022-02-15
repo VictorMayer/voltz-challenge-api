@@ -160,6 +160,8 @@
                 }
             },
             "get": {
+                "summary": "list tools",
+                "description": "list all tools, or if a tag query string is passed in the requisition url, list all tools that matched the given tag",
                 "parameters": [
                     { 
                         "name": "tag",
@@ -170,8 +172,6 @@
                         }
                     }
                 ],
-                "summary": "list tools",
-                "description": "list all tools, or if a tag query string is passed in the requisition url, list all tools that matched the given tag",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -190,7 +190,44 @@
                         "description": "Not Found",
                         "content": {
                             "text/plain": {
-                                "example": "No tool have been registered yet"
+                                "examples": {
+                                    "noToolsFound": { "value": "No tools have been registered yet" },
+                                    "notaggedToolsFound": { "value": "No tools with the given tag have been registered" }
+                                } 
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tools/{id}": {
+            "delete": {
+                "summary": "remove tool",
+                "description": "remove a single tool given its id passed by url params",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        }
+                    }                    
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "example": "{}"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "text/plain": {
+                                "example": "ID must be a number!"
                             }
                         }
                     }
