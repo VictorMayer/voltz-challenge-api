@@ -10,4 +10,12 @@ const router = Router();
 router.use('/users', userRouter);
 router.use('/tools', tokenAuthorizationMiddleware, toolsRouter);
 
+router.get('/check-status', (req, res) => {
+    res.send('OK!');
+});
+
+router.all('/*', (req, res) => {
+    res.sendStatus(501);
+});
+
 export default router;

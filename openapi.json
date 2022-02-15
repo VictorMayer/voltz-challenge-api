@@ -1,0 +1,24 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Tools API",
+        "description": "This API allows you, as an authenticated user, to request tools, that can be sourced by a specific tag or not, and in this case it will list all registered tools. If your loved tool isn't listed there, you can always register a new tool since you are an authenticated user.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/users/sign-up": {
+            "post": {
+                "summary": "register a new user",
+                "description": "given a unique email and a long-enougth password, this route creates a new user",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
